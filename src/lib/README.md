@@ -57,3 +57,30 @@ angle.stringify(0.6, ''),
 angle.stringify(0.8, ''),
 angle.stringify(1.0, '')
 )
+
+### character
+
+console.log(
+small
+sub
+smallcap
+sup
+rune
+bbb
+cursive
+cursiveBold
+fraktur
+region
+square
+squared
+squareBlack
+circled
+circleBlack
+ascii
+hira2kata
+kata2hira
+swapKana
+devoice
+semiVoice
+fullVoice
+)

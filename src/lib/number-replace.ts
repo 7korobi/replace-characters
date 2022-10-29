@@ -15,7 +15,6 @@ export function hex(str: string) {
 					num = float;
 				}
 			}
-			console.log(flag, num, sub, head || tail);
 			return [flag, num, sub].join('');
 		}
 	);
@@ -36,8 +35,7 @@ export function digit(str: string) {
 					num = float;
 				}
 			}
-			num = comma3(num);
-			return [flag, num, sub, ext].join('');
+			return [flag, comma3(num), sub, ext].join('');
 		}
 	);
 	return str;
