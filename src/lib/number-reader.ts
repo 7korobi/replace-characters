@@ -1,4 +1,3 @@
-import { Devanagari, hiragana, kanji } from './util';
 
 const VERBOSE = false;
 
@@ -46,6 +45,14 @@ export const よみ = numTable(
 				}
 			}
 			switch (byScale) {
+				case  10:
+					switch (tail) {
+						case 'けい':
+						case 'がい':
+							return `じゅっ${tail}`;
+						default:
+							return `じゅう${tail}`;
+					}
 				case 300:
 					return `さんびゃく${tail}`;
 				case 600:
@@ -57,7 +64,9 @@ export const よみ = numTable(
 				case 8000:
 					return `はっせん${tail}`;
 				default:
-					return `${str}${tail}`;
+					let ret = `${str}${tail}`;
+					ret.replace('ちち', 'っち')
+					return ret
 			}
 		},
 		unit: ['だーす つい つがい そく そう わり', [12, 2, 2, 2, 2, 0.1]]
@@ -66,13 +75,12 @@ export const よみ = numTable(
 	'せいじょう こくう りっとく せつな だんし しゅんそく しゅゆ しゅんじゅん もこ ばく びょう あい じん しゃ せん び こつ し もう りん ぶ いち じゅう ひゃく せん',
 	'まん おく ちょう けい がい じょ じょう こう かん せい さい ごく ごうがしゃ あそうぎ なゆた ふかしぎ むりょうたいすう'
 );
+// TODO: いちちょう　いっちょう　　はちちょう  はっちょう
 
 export const こてん = numTable(
 	{
 		stringify(byScale, byBig, str, tail) {
-			if (!str) return '';
-			if (byScale < 1) return str;
-			if (100 < byScale) return str;
+			console.log(`stringify  ${byScale}, ${byBig}, ${str}, ${tail}`)
 
 			if ('か' === tail) {
 				switch (byScale) {
@@ -158,8 +166,8 @@ export const ヒンディーtest = numTable(
 		big: [1.5, 1]
 	},
 	[...Array(100)].map((_, i) => i).join(' '),
-	'1 (e2)',
-	'(e3) (e5) (e7) (e9) (e11) (e13) (e15) (e17) (e19)'
+	'1 x100+',
+	'x1K+ x100K+ x10M+ x1G+ x100G+ x10T+ x1P+ x100P+ x10E+ x1Z+'
 );
 
 const _0__59 = [...Array(60)].map((_, i) => i).join(' ');
@@ -171,7 +179,7 @@ function numTable(
 		zero?: string;
 		big?: [number, number];
 		unit?: [string, number[]];
-		stringify?(byScale: number, byBig: number, str: string, appendix?: string): string;
+		stringify?(byScale: number, byBig: number, str: string, appendix?: string, ): string;
 	},
 	itemStr: string,
 	scaleStr: string,
@@ -266,7 +274,6 @@ function numTable(
 				let num = item ? items.indexOf(item) : scale ? 1 : 0;
 
 				if (num) {
-					if (VERBOSE) console.log(item, scale, num * base);
 					value += num * base;
 				}
 			}
@@ -286,12 +293,6 @@ function numTable(
 		while (num * scale !== Math.floor(num * scale)) {
 			scaleAt--;
 			scale *= scaleBaseSize;
-		}
-		while ((num * scale) % scaleBaseSize === 0) {
-			const scaleGap = calcScaleGap(scaleAt);
-			const scaleSize = scaleBaseSize ** scaleGap;
-			scaleAt += scaleGap;
-			scale /= scaleSize;
 		}
 		return calc(Math.floor(num * scale), scaleAt, appendix, 0 <= scaleAt);
 	}
@@ -333,12 +334,10 @@ function numTable(
 
 		const toStringed = toString(
 			scaleBaseSize ** scaleIdx * mScale,
-			mBig,
+			0,
 			`${itemStr}${scaleStr}`,
 			isTail ? `${bigStr}${appendix}` : `${bigStr}`
 		);
-		if (VERBOSE)
-			console.log({ scaleAt, idx: [scaleIdx, bigIdx], str: [itemStr, scaleStr, bigStr] });
 		return `${leftStr}${join}${toStringed}`;
 	}
 }
