@@ -1,3 +1,3 @@
-export * from './number-reader';
-export * from './number-replace';
-export * from './character-replace';
+export * from './number-reader.js';
+export * from './number-replace.js';
+export * from './character-replace.js';

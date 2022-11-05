@@ -1,4 +1,3 @@
-
 const VERBOSE = false;
 
 export const 漢字 = numTable(
@@ -45,7 +44,7 @@ export const よみ = numTable(
 				}
 			}
 			switch (byScale) {
-				case  10:
+				case 10:
 					switch (tail) {
 						case 'けい':
 						case 'がい':
@@ -65,8 +64,8 @@ export const よみ = numTable(
 					return `はっせん${tail}`;
 				default:
 					let ret = `${str}${tail}`;
-					ret.replace('ちち', 'っち')
-					return ret
+					ret.replace('ちち', 'っち');
+					return ret;
 			}
 		},
 		unit: ['だーす つい つがい そく そう わり', [12, 2, 2, 2, 2, 0.1]]
@@ -80,7 +79,7 @@ export const よみ = numTable(
 export const こてん = numTable(
 	{
 		stringify(byScale, byBig, str, tail) {
-			console.log(`stringify  ${byScale}, ${byBig}, ${str}, ${tail}`)
+			console.log(`stringify  ${byScale}, ${byBig}, ${str}, ${tail}`);
 
 			if ('か' === tail) {
 				switch (byScale) {
@@ -179,7 +178,7 @@ function numTable(
 		zero?: string;
 		big?: [number, number];
 		unit?: [string, number[]];
-		stringify?(byScale: number, byBig: number, str: string, appendix?: string, ): string;
+		stringify?(byScale: number, byBig: number, str: string, appendix?: string): string;
 	},
 	itemStr: string,
 	scaleStr: string,

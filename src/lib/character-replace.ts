@@ -1,4 +1,4 @@
-import { allKana } from './util';
+import { allKana } from './util.js';
 
 type TABLE = {
 	[src: string]: string;
